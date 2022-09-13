@@ -133,6 +133,14 @@ function viewAllDepartments() {
       startApp();
     });
   }
+//View All Roles
+function viewEmployeeRole() {
+    connection.query("SELECT * FROM roles;", (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      startApp();
+    });
+}
 //Add New Role
 function addRole() {
     inquirer
