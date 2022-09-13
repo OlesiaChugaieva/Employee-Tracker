@@ -38,6 +38,7 @@ const startApp = () => {
                 'Add Department',
                 'Add Role',
                 'Add Employee',
+                'Update Role',
                 'Quit',
             ],
 
@@ -107,7 +108,7 @@ function addEmployee() {
                     first_name: answer.first_name,
                     last_name: answer.last_name,
                     roles_id: answer.roles_id,
-                    manager_id: answer.manager_id,
+                    department_id: answer.department_id,
                 },
                 (err, answer) => {
                     if (err) throw err;
@@ -159,7 +160,7 @@ function addRole() {
             {
                 type: "input",
                 message: "What is the department's id number?",
-                name: "deptartment_id"
+                name: "department_id"
             }
         ])
         .then(function (answer) {
@@ -209,8 +210,8 @@ function updateRole() {
         .prompt([
             {
                 type: "input",
-                message: "Select employee you wanna update",
-                name: "Select"
+                message: "Select employee you want to update",
+                name: "select"
             },
 
             {
@@ -220,7 +221,7 @@ function updateRole() {
             }
         ])
         .then(function (answer) {
-            connection.query('UPDATE employee SET roles_id=? WHERE first_name= ?', [answer.Select, answer.updateRole], function (err, res) {
+            connection.query('UPDATE employee SET roles_id=? WHERE first_name= ?', [answer.select, answer.updateRole], function (err, res) {
                 if (err) throw err;
                 console.table(res);
                 startApp();
