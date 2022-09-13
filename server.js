@@ -21,10 +21,10 @@ const connection = mysql.createConnection(
         password: 'Avrilka357!',
         database: 'employee_db'
     },
-    console.log(`Connected to the employee_db database.`)
+    console.log(`Connected to the employee_db.`)
 );
 
-//Choose next step
+//Choose your next step
 const startApp = () => {
     return inquirer.prompt([
         {
@@ -35,7 +35,7 @@ const startApp = () => {
                 'View All Departments',
                 'View All Roles',
                 'View All Employees',
-                'Add Departments',
+                'Add Department',
                 'Add Role',
                 'Add Employee',
                 'Quit',
@@ -102,43 +102,44 @@ function addEmployee() {
             }
         ])
         .then(function (answer) {
-            connection.query("INSERT INTO employee SET ? " ,
+            connection.query("INSERT INTO employee SET ? ",
                 {
-                  first_name: answer.first_name,
-                  last_name: answer.last_name,
-                  roles_id: answer.roles_id,
-                  manager_id: answer.manager_id,
+                    first_name: answer.first_name,
+                    last_name: answer.last_name,
+                    roles_id: answer.roles_id,
+                    manager_id: answer.manager_id,
                 },
                 (err, answer) => {
                     if (err) throw err;
                     console.table(answer);
                     startApp()
-            });
+                });
+        }
+        )
 }
-        )}
 // View All Employees
 function viewAllEmployees() {
     connection.query("SELECT * FROM employee;", (err, res) => {
-      if (err) throw err;
-      console.table(res);
-      startApp();
+        if (err) throw err;
+        console.table(res);
+        startApp();
     });
-  }
+}
 
 //View All Departments
 function viewAllDepartments() {
     connection.query("SELECT * FROM department;", (err, res) => {
-      if (err) throw err;
-      console.table(res);
-      startApp();
+        if (err) throw err;
+        console.table(res);
+        startApp();
     });
-  }
+}
 //View All Roles
 function viewEmployeeRole() {
     connection.query("SELECT * FROM roles;", (err, res) => {
-      if (err) throw err;
-      console.table(res);
-      startApp();
+        if (err) throw err;
+        console.table(res);
+        startApp();
     });
 }
 //Add New Role
@@ -163,37 +164,43 @@ function addRole() {
         ])
         .then(function (answer) {
 
-            connection.query("INSERT INTO roles SET ? " ,
-            {
-              title: answer.title,
-              salary: answer.salary,
-              department_id: answer.department_id,
-            },
-            (err, answer) => {
-                if (err) throw err;
-                console.table(answer);
-                
-                startApp();
-            });
+            connection.query("INSERT INTO roles SET ? ",
+                {
+                    title: answer.title,
+                    salary: answer.salary,
+                    department_id: answer.department_id,
+                },
+                (err, answer) => {
+                    if (err) throw err;
+                    console.table(answer);
+
+                    startApp();
+                });
         });
 }
 //Add New Department
-const addDepartment = () => {
-    inquirer.prompt([
-        {
-            type: 'input',
-            message: "What's the name of the department?",
-            name: 'department_name'
-        }
-    ])
+function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                message: "What is the department_name?",
+                name: "department_name"
+            }
+        ])
         .then(function (answer) {
-            connection.query("INSERT INTO department (department_name) VALUES (?)", [answer.department_name], function (err, res) {
-                if (err) throw err;
-                console.log(`added ${res.department}to the database`);
-                startApp()
-            })
-        })
-};
+
+            connection.query("INSERT INTO department SET ? ",
+                {
+                    department_name: answer.department_name,
+                },
+                (err, answer) => {
+                    if (err) throw err;
+                    console.table(answer);
+                    startApp();
+                });
+        });
+}
 
 
 //Update Role
