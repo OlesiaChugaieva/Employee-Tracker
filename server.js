@@ -108,7 +108,7 @@ function addEmployee() {
                     first_name: answer.first_name,
                     last_name: answer.last_name,
                     roles_id: answer.roles_id,
-                    department_id: answer.department_id,
+                    manager_id: answer.manager_id,
                 },
                 (err, answer) => {
                     if (err) throw err;
